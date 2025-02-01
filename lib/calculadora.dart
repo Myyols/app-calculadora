@@ -1,5 +1,6 @@
 import 'package:expressions/expressions.dart';
 import 'package:flutter/material.dart';
+import 'package:math_expressions/math_expressions.dart';  // Importando math_expressions
 
 class Calculadora extends StatefulWidget {
   const Calculadora({super.key});
@@ -33,10 +34,18 @@ class _CalculadoraState extends State<Calculadora> {
   }
 
   double avaliarExpressao(String expressao) {
-    // avaliar expressao com a biblioteca expressions
-    ExpressionEvaluator avaliador = const ExpressionEvaluator();
-    double resultado = avaliador.eval(Expression.parse(expressao), {});
-    return resultado;
+    try {
+      ExpressionEvaluator avaliador = const ExpressionEvaluator();
+      double resultado = avaliador.eval(Expression.parse(expressao), {});
+      return resultado;
+    } catch (e) {
+      // Usando math_expressions se a biblioteca expressions não conseguir avaliar
+      Parser p = Parser();
+      Expression exp = p.parse(expressao);
+      ContextModel cm = ContextModel();
+      double resultado = exp.evaluate(EvaluationType.REAL, cm);
+      return resultado;
+    }
   }
 
   Widget _botao(String valor) {
@@ -91,6 +100,14 @@ class _CalculadoraState extends State<Calculadora> {
                 _botao('.'),
                 _botao('='),
                 _botao('+'),
+                _botao('sin'),
+                _botao('cos'),
+                _botao('tan'),
+                _botao('log'),
+                _botao('pow'),
+                _botao('mean'),
+                _botao('std'),
+                _botao('factor'),
               ],
             ),
           ),
@@ -98,6 +115,11 @@ class _CalculadoraState extends State<Calculadora> {
             child: _botao(_limpar),
           )
         ],
+      ),
+    );
+  }
+}
+
       ),
     );
   }
