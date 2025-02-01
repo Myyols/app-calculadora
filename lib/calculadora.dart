@@ -1,6 +1,6 @@
 import 'package:expressions/expressions.dart';
 import 'package:flutter/material.dart';
-import 'package:math_expressions/math_expressions.dart';  // Importando math_expressions
+import 'package:math_expressions/math_expressions.dart';  
 
 class Calculadora extends StatefulWidget {
   const Calculadora({super.key});
@@ -39,7 +39,7 @@ class _CalculadoraState extends State<Calculadora> {
       double resultado = avaliador.eval(Expression.parse(expressao), {});
       return resultado;
     } catch (e) {
-      // Usando math_expressions se a biblioteca expressions não conseguir avaliar
+     
       Parser p = Parser();
       Expression exp = p.parse(expressao);
       ContextModel cm = ContextModel();
